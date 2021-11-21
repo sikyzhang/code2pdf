@@ -1,4 +1,5 @@
 import subprocess
+import shutil
 import sys
 import os
 
@@ -137,6 +138,7 @@ def make_pdf():
     subprocess.run(cmd)
     subprocess.run(cmd)
     os.chdir("..")
+    shutil.copy(".temp/code.pdf", "code.pdf")
 
 
 if __name__ == '__main__':
