@@ -1,3 +1,4 @@
+import subprocess
 import sys
 import os
 
@@ -85,7 +86,7 @@ def add_beginning():
     print(r"\newpage")
     print("")
     print(r"%正文开始")
-    print(r"%\pagestyle{plain}")
+    print(r"\pagestyle{plain}")
     print(r"\setcounter{page}{1}")
 
 
@@ -130,6 +131,14 @@ def add_main_body(root=source_dir, level=1):
         code2latex(path)
 
 
+def make_pdf():
+    os.chdir(".temp")
+    cmd = r"xelatex.exe -synctex=1 -interaction=nonstopmode code.tex"
+    subprocess.run(cmd)
+    subprocess.run(cmd)
+    os.chdir("..")
+
+
 if __name__ == '__main__':
     open_file_and_redirect_stdout()
 
@@ -142,3 +151,5 @@ if __name__ == '__main__':
 
     print(r"\end{document}")
     close_file_and_recover_stdout()
+
+    make_pdf()
