@@ -5,12 +5,14 @@ import os
 
 # configuration
 title = "Code Templates"
-author = "Your Name"
+author = "Seaside Guys"
 
 # 各级文件夹对应的目录等级
 level_map = {1: "section",
              2: "subsection",
-             3: "subsubsection"}
+             3: "subsubsection",
+             4: "paragraph",
+             5: "subparagraph"}
 source_dir = "./sources"
 
 stdout0 = sys.stdout  # 备份stdout
@@ -39,6 +41,11 @@ def add_preset():
     print(r"\usepackage{ctex}")  # 中文支持
     print(r"\usepackage{listings}")  # 代码环境支持
     print(r"\usepackage{xcolor}")  # 修改颜色使用
+    print(r"\usepackage{geometry}")  # 修改文档板式
+    print()
+
+    print(r"% 设置上下左右边距")
+    print(r"\geometry{a4paper, left=3cm, right=3cm, top=4cm, bottom=4cm}")
     print()
 
     print(r"% 声明颜色")
@@ -46,6 +53,11 @@ def add_preset():
     print(r"\definecolor{gray}{rgb}{0.5,0.5,0.5}")
     print(r"\definecolor{mauve}{rgb}{0.58,0,0.82}")
     print()
+
+    print(r"% 设置目录显示章节深度")
+    print(r"\setcounter{tocdepth}{4}")
+    print(r"% 设置章节编号显示深度")
+    print(r"\setcounter{secnumdepth}{3}")
 
     print(r"% 设置代码高亮颜色", end="")
     print(r"""
@@ -101,6 +113,10 @@ def code2latex(path):
         lang = "python"
     elif file_ext == ".m":
         lang = "matlab"
+    elif file_ext == ".html":
+        lang = "html"
+    elif file_ext in [".java", ".jsp"]:
+        lang = "java"
     else:
         raise Exception("no fucking language.")
     print(r"\begin{lstlisting}[language=" + lang + "]")
